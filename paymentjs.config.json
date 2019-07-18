@@ -1,0 +1,15 @@
+{
+  "hostname": "cert.api.firstdata.com",
+  "credentials": {
+    "apiKey": "{PAYMENTJS2_APIKEY",
+    "apiSecret": "{PAYMENTJS2_APISECRET"
+  },
+  "gatewayConfig": {
+    "gateway": "PAYEEZY",
+    "apiKey": "{PAYEEZY_APIKEY}",
+    "apiSecret": "{PAYEEZY_APISECRET}",
+    "authToken": "{PAYEEZY_AUTHTOKEN}",
+    "transarmorToken": "{PAYEEZY_TATOKEN}",
+    "zeroDollarAuth": true
+  }
+}
