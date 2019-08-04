@@ -132,8 +132,8 @@ const onCreate = (paymentForm) => {
   };
 
   const onError = (error) => {
-    console.log("Tokenize Error: " + error.message());
-    alert("Tokenization request error: \"" + error.message() + "\"");
+    console.log("Tokenize Error: " + error.message);
+    alert("Tokenization request error: \"" + error.message + "\"");
     SubmitButton.removeSubmitState();
     paymentForm.reset(() => {});
   };
