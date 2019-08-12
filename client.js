@@ -1,41 +1,39 @@
-const DomUtils = {
-  getEl: (selector) => window.document.querySelector(selector),
+const DomUtils = {};
+DomUtils.getEl = function (selector) { window.document.querySelector(selector) };
 
-  hasClass: (el, cssClass) => {
-    if (el.classList) {
-      return el.classList.contains(cssClass);
-    }
-    return !!el.className.match(new RegExp(`(\\s|^)${cssClass}(\\s|$)`));
-  },
-
-  removeClass: (el, cssClass) => {
-    if (el.classList) {
-      el.classList.remove(cssClass);
-    } else if (DomUtils.hasClass(el, cssClass)) {
-      const reg = new RegExp(`(\\s|^)${cssClass}(\\s|$)`);
-      el.className = el.className.replace(reg, ' ');
-    }
-  },
+DomUtils.hasClass = function (el, cssClass) {
+  if (el.classList) {
+    return el.classList.contains(cssClass);
+  }
+  return !!el.className.match(new RegExp('(\\s|^)' + cssClass + '(\\s|$)'));
 };
 
-const SubmitButton = {
-  buttonElement: DomUtils.getEl('[data-submit-btn]'),
-  loaderElement: DomUtils.getEl('.btn__loader'),
-
-  enable: () => {
-    SubmitButton.buttonElement.disabled = false;
-    DomUtils.removeClass(SubmitButton.buttonElement, 'disabled-bkg');
-  },
-
-  setSubmitState: () => {
-    SubmitButton.buttonElement.disabled = true;
-    SubmitButton.loaderElement.style.display = 'inline-block';
-  },
-
-  removeSubmitState: () => {
-    SubmitButton.buttonElement.disabled = false;
-    SubmitButton.loaderElement.style.display = 'none';
+DomUtils.removeClass = function (el, cssClass) {
+  if (el.classList) {
+    el.classList.remove(cssClass);
+  } else if (DomUtils.hasClass(el, cssClass)) {
+    const reg = new RegExp('(\\s|^)' + cssClass + '(\\s|$)');
+    el.className = el.className.replace(reg, ' ');
   }
+};
+
+const SubmitButton = {};
+SubmitButton.buttonElement = window.document.querySelector('[data-submit-btn]');
+SubmitButton.loaderElement = window.document.querySelector('.btn__loader');
+
+SubmitButton.enable = function () {
+  SubmitButton.buttonElement.disabled = false;
+  DomUtils.removeClass(SubmitButton.buttonElement, 'disabled-bkg');
+};
+
+SubmitButton.setSubmitState = function () {
+  SubmitButton.buttonElement.disabled = true;
+  SubmitButton.loaderElement.style.display = 'inline-block';
+};
+
+SubmitButton.removeSubmitState = function () {
+  SubmitButton.buttonElement.disabled = false;
+  SubmitButton.loaderElement.style.display = 'none';
 };
 
 const config = {
@@ -106,7 +104,7 @@ const config = {
 
 function authorizeSession(callback) {
   let request = new XMLHttpRequest();
-  request.onload = () => {
+  request.onload = function () {
     if (request.status >= 200 && request.status < 300) {
       callback(JSON.parse(request.responseText));
     } else {
@@ -123,26 +121,32 @@ const hooks = {
   preFlowHook: authorizeSession,
 };
 
-const onCreate = (paymentForm) => {
-  const onSuccess = (clientToken) => {
-    console.log("submit success; clientToken=\""+clientToken+"\"");
-    alert("Tokenization request sent!\nCheck your webhook for results using clientToken.\n\nclientToken=\""+clientToken+"\" (also available in console)");
+const onCreate = function (paymentForm) {
+  const onSuccess = function (clientToken) {
+    console.log("submit success; clientToken=\"" + clientToken + "\"");
+    alert("Tokenization request sent!\nCheck your webhook for results using clientToken.\n\nclientToken=\"" + clientToken + "\" (also available in console)");
     SubmitButton.removeSubmitState();
-    paymentForm.reset(() => {});
+    paymentForm.reset(function () { });
   };
 
-  const onError = (error) => {
+  const onError = function (error) {
     console.log("Tokenize Error: " + error.message);
     alert("Tokenization request error: \"" + error.message + "\"");
     SubmitButton.removeSubmitState();
-    paymentForm.reset(() => {});
+    paymentForm.reset(function () { });
   };
-  const form = DomUtils.getEl('#form')
-  form.addEventListener('submit', (e) => {
+
+  const form = window.document.querySelector('form');
+  var formListener = function (e) {
     e.preventDefault();
     SubmitButton.setSubmitState();
     paymentForm.onSubmit(onSuccess, onError);
-  });
+  };
+  if (form.addEventListener) {
+    form.addEventListener('submit', formListener, false);
+  } else {
+    form.attachEvent('onsubmit', formListener);
+  };
 
   const ccFields = window.document.getElementsByClassName('payment-fields');
   for (let i = 0; i < ccFields.length; i++) {
