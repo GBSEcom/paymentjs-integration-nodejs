@@ -50,7 +50,11 @@ const authorizeSession = (config, nonce, callback) => {
     console.log('[info] [authorizeSession] received response with status ' + response.statusCode);
     if (response.statusCode === 200) {
       const responseNonce = response.headers['nonce'];
+
+      // nonce should match what we used to authorize the session
       if (responseNonce === nonce) {
+
+        // read response body
         response.setEncoding('utf8');
         response.on('data', (bodyStr) => {
           const clientToken = response.headers['client-token'];
@@ -60,14 +64,18 @@ const authorizeSession = (config, nonce, callback) => {
         response.on('error', (e) => {
           callback(e, undefined);
         });
+
       } else {
+        // the nonce did not match
         callback(new Error('nonce validation failed for nonce "' + nonce + '"'));
       }
     } else {
+      // unsuccessful or otherwise unexpected response status code
       callback(new Error('received HTTP ' + response.statusCode), undefined);
     };
   });
 
+  // write the payload to the request object
   request.write(requestBody);
   request.end();
 };
