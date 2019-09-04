@@ -55,6 +55,9 @@ const config = {
     },
   },
 
+  // css classes to be injected into the iframes.
+  // the properties allowed are restricted via whitelist.
+  // further, unrestricted styling can be applied to the div's in which the iframes are injected.
   styles: {
     input: {
       'font-size': '16px',
@@ -96,6 +99,7 @@ const config = {
     },
   },
 
+  // these values correspond to css class names defined above
   classes: {
     empty: 'empty',
     focus: 'focus',
