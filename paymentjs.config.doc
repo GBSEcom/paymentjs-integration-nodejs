@@ -1,0 +1,15 @@
+config = {
+        "hostname": 'cert.api.firstdata.com', // prod.api.firstdata.com | cert.api.firstdata.com
+        "credentials": {
+            "apiKey": 'el0NPm15BBjf9bJ0CHq1BR9yrxjiFdiL', // API Key
+            "apiSecret": '2MzAPUtQhwLXl1eq' // Payment.JS Secret
+        },
+        "gatewayConfig": {
+            "gateway": "PAYEEZY",
+            "apiKey": 'el0NPm15BBjf9bJ0CHq1BR9yrxjiFdiL', // API Key
+            "apiSecret": 'd44bd38fcca57932983730355ef404649238e7fb386f99d9bb4c8fbf80109c3f', // API Secret
+            "authToken": 'fdoa-bb470366780d01510f10f403f3585217e93301ab6b581872', // Merchant Token
+            "transarmorToken": 'ABCD',
+            "zeroDollarAuth": False // True | False
+        }
+    }
