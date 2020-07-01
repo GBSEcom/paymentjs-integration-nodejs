@@ -42,7 +42,8 @@ const authorizeSession = (config, nonce, callback) => {
       'Message-Signature': msgSignature,
       'Nonce': nonce,
       'Timestamp': timestamp,
-    }
+    },
+    data: requestBody,
   };
 
   console.log('[info] [authorizeSession] sending request');

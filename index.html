@@ -13,18 +13,20 @@
     <!-- Note: no input fields shown in this block because they are injected by the client library -->
     <form id="form">
       <div>
+        <!-- Note: this is the label for the card number field -->
+        <label for="cc-card" class="control-label">Card Number</label>
+
+        <!-- Note: the card number iframe will be injected inside here -->
+        <div class="form-controls payment-fields disabled empty" id="cc-card" data-cc-card></div>
+      </div>
+
+      <div>
         <!-- Note: this is the label for the cardholder name field -->
         <label for="cc-name" class="control-label">Card Holder Name</label>
 
         <!-- Note: the cardholder name iframe will be injected inside here -->
         <div class="form-controls payment-fields disabled" id="cc-name" data-cc-name></div>
       </div>
-
-      <!-- Note: this is the label for the card number field -->
-      <label for="cc-card" class="control-label">Card Number</label>
-
-      <!-- Note: the card number iframe will be injected inside here -->
-      <div class="form-controls payment-fields disabled empty" id="cc-card" data-cc-card></div>
 
       <div class="col1">
         <!-- Note: this is the label for the card expiration date field-->
@@ -33,6 +35,7 @@
         <!-- Note: the expiration date iframe will be injected inside here -->
         <div class="form-controls payment-fields disabled empty" id="cc-exp" data-cc-exp></div>
       </div>
+
       <div class="col2">
         <!-- Note: this is the label for the card security code field-->
         <label for="cc-cvv" class="control-label">CVV</label>
