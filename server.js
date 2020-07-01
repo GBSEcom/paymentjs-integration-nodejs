@@ -38,12 +38,10 @@ const authorizeSession = (config, nonce, callback) => {
     headers: {
       'Api-Key': config.credentials.apiKey,
       'Content-Type': 'application/json',
-      'Content-Length': requestBody.length,
       'Message-Signature': msgSignature,
       'Nonce': nonce,
       'Timestamp': timestamp,
     },
-    data: requestBody,
   };
 
   console.log('[info] [authorizeSession] sending request');
